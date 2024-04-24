@@ -10,6 +10,7 @@ public class CharacterController : MonoBehaviour
     public float m_difference = 5f;
     const float EXTRA_TIMER = 20f;
     public float m_timer;
+    public float m_reviveTimer = 5f;
     Animator m_animator;
     // Start is called before the first frame update
     void Start()
@@ -39,13 +40,14 @@ public class CharacterController : MonoBehaviour
     }
     public void OhYeahAnim()
     {
-        m_animator.SetInteger("OhIndex", Random.Range(0, 2));
+        m_animator.SetInteger("OhIndex", Random.Range(0, 3));
         m_animator.SetTrigger("OHYEAH");
         ResetTimer();
     }
 
     public void ReduceHealth()
     {
+        if (isDeadCheck()) return;
         m_health -= m_difference;
         if (m_health <= 0)
         {
@@ -65,25 +67,38 @@ public class CharacterController : MonoBehaviour
         if (m_health <= 0) Revive();
         else
         {
+            if (isDeadCheck()) return;
             m_health += m_difference;
-
+            
         }
 
         if (m_health > MAX_HEALTH)
         {
             m_health = MAX_HEALTH;
         }
-        else
+        else if (!isDeadCheck())
         {
             m_animator.SetTrigger("Healed");
         }
         setHealth();
     }
 
+    bool isDeadCheck()
+    {
+        if (m_animator.GetBool("Dead"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void Revive()
     {
         m_health += MAX_HEALTH / 2;
-        m_animator.SetBool("Dead", false);
+        StartCoroutine(wait4Revive());
     }
 
     void setHealth()
@@ -91,5 +106,13 @@ public class CharacterController : MonoBehaviour
         m_animator.SetFloat(m_healthHash, (m_health / MAX_HEALTH));
         // reset timer
         m_timer = EXTRA_TIMER / 2;
+    }
+
+    IEnumerator wait4Revive()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(m_reviveTimer);
+        m_animator.SetBool("Dead", false);
+
     }
 }

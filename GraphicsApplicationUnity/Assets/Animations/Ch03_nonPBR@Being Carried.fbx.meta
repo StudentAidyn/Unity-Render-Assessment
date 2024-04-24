@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: 6218fb2919174a74684d3c51bdbfc3f1
+guid: cf78f64f68eee9b43b0b16fc72c29246
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch03_1001_Diffuse
-    second: {fileID: 2800000, guid: c4ac39c477dc41b41b77d547c0c7af27, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch03_1001_Glossiness
-    second: {fileID: 2800000, guid: 2075d118f1afe96479cc07d56af7fd6e, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch03_1001_Normal
-    second: {fileID: 2800000, guid: f75e70d211b1d714a95237797eddbcb1, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Ch03_1001_Specular
-    second: {fileID: 2800000, guid: fd201726f83899f4e93391d49122ab6e, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -51,7 +31,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Being Carried
+      takeName: mixamo.com
+      internalID: -203655887218126122
+      firstFrame: 0
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -95,19 +104,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - c90e2ff8ae7dd16479df29e05c77c5ef
-  - cf78f64f68eee9b43b0b16fc72c29246
-  - 5cc8ca3c4d908cd46b1c9d8d2b7a9b2b
-  - 09995faeb255917469b71058d899a656
-  - 5de06dea28b827b4691c5d31576da7c7
-  - a781b3fc63a718c4b888d4be4ccb1173
-  - 5e687532f83e86e48b5f99c474a733b7
-  - bf47d3668c71b6a48bbb56bc1461a677
-  - 785ec8bce1c08ea408c9457b3a9335d0
-  - 622c079992c505143adf3a2abc37c579
-  - 9e0ef0d2177d1714f978493742e0195f
-  - 58ea227f749372848b90274f24f8aa72
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
