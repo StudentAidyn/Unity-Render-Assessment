@@ -27,7 +27,7 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             m_turn.x += Input.GetAxis("Mouse X") * m_sensitivity;
             m_turn.y += Input.GetAxis("Mouse Y") * m_sensitivity;

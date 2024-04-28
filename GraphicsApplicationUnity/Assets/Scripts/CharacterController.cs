@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    const float MAX_HEALTH = 100f;
-    float m_health;
+    // Health will always be set to the max health on start unless altered otherwise
+    [SerializeField] const float MAX_HEALTH = 100f;
+    float m_health = MAX_HEALTH;
     int m_healthHash;
     public float m_difference = 5f;
-    const float EXTRA_TIMER = 20f;
-    public float m_timer;
-    public float m_reviveTimer = 5f;
+
+    public float GetCurrentHealth() { return m_health; }
+
+    // Animation Timers
+    const float EXTRA_TIMER_MAX = 20f;
+    [SerializeField] float m_extraTimer;
+    [SerializeField] float m_reviveTimer = 5f;
+
+    // Animator Component Reference
     Animator m_animator;
+
     // Start is called before the first frame update
     void Start()
     {
         // assigning animator
         m_animator = GetComponent<Animator>();
         m_healthHash = Animator.StringToHash("Health");
-        m_health = MAX_HEALTH;
         setHealth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_timer -= 1 * Time.deltaTime;
-        if (m_timer <= 0) {
+        m_extraTimer -= 1 * Time.deltaTime;
+        if (m_extraTimer <= 0) {
             // play animation
             // reset timer
             m_animator.SetTrigger("Extra");
@@ -36,7 +43,7 @@ public class CharacterController : MonoBehaviour
 
     void ResetTimer()
     {
-        m_timer = EXTRA_TIMER;
+        m_extraTimer = EXTRA_TIMER_MAX;
     }
     public void OhYeahAnim()
     {
@@ -45,9 +52,9 @@ public class CharacterController : MonoBehaviour
         ResetTimer();
     }
 
-    public void ReduceHealth()
+    public float ReduceHealth()
     {
-        if (isDeadCheck()) return;
+        if (isDeadCheck()) return 0;
         m_health -= m_difference;
         if (m_health <= 0)
         {
@@ -60,14 +67,15 @@ public class CharacterController : MonoBehaviour
             m_animator.SetTrigger("Damaged");
         }
         setHealth();
+        return m_health;
     }
 
-    public void IncreaseHealth()
+    public float IncreaseHealth()
     {
         if (m_health <= 0) Revive();
         else
         {
-            if (isDeadCheck()) return;
+            if (isDeadCheck()) return 0;
             m_health += m_difference;
             
         }
@@ -81,6 +89,7 @@ public class CharacterController : MonoBehaviour
             m_animator.SetTrigger("Healed");
         }
         setHealth();
+        return m_health;
     }
 
     bool isDeadCheck()
@@ -105,7 +114,7 @@ public class CharacterController : MonoBehaviour
     {
         m_animator.SetFloat(m_healthHash, (m_health / MAX_HEALTH));
         // reset timer
-        m_timer = EXTRA_TIMER / 2;
+        m_extraTimer = EXTRA_TIMER_MAX / 2;
     }
 
     IEnumerator wait4Revive()
