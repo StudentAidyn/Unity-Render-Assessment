@@ -75,7 +75,7 @@ public class CharacterController : MonoBehaviour
         if (m_health <= 0) Revive();
         else
         {
-            if (isDeadCheck()) return 0;
+            if (isDeadCheck()) return m_health;
             m_health += m_difference;
             
         }
