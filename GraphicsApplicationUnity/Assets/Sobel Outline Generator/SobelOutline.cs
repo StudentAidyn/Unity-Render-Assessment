@@ -35,6 +35,7 @@ namespace VertexFragment
 
     public sealed class SobelOutlineRenderer : PostProcessEffectRenderer<SobelOutline>
     {
+        // references the sobel Shader it uses
         public const string SobelShader = "VertexFragment/SobelOutlineCg";
 
         public override void Render(PostProcessRenderContext context)

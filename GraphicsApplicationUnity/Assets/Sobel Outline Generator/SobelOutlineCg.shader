@@ -137,7 +137,7 @@ Shader "VertexFragment/SobelOutlineCg"
 
                 // Colorize the outline
                 float3 outlineColor = lerp(sceneColor, _OutlineColor.rgb, clamp(_OutlineColor.a, 0.0f, 1.0f));
-                color = lerp(sceneColor, outlineColor, sobelOutline);
+                color = lerp(sceneColor, outlineColor.rgb, sobelOutline);
 
                 return float4(color, 1.0);
             }

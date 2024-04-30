@@ -60,11 +60,11 @@ Shader "VertexFragment/SobelOutlineHLSL"
         float sobelNormal = sobelNormalVec.x + sobelNormalVec.y + sobelNormalVec.z;
         sobelNormal = pow(sobelNormal * _OutlineNormalMultiplier, _OutlineNormalBias);
 
-        //float sobelOutline = saturate(max(sobelDepth, sobelNormal));
-        float sobelOutline = saturate(sobelDepth + sobelNormal);
+        float sobelOutline = saturate(max(sobelDepth, sobelNormal));
+        //float sobelOutline = saturate(sobelDepth + sobelNormal);
 
-        //float3 outlineColor = lerp(sceneColor, _OutlineColor.rgb, _OutlineColor.a);
-        float3 outlineColor = lerp(sceneColor, _OutlineColor.rgb, sobelOutline);
+        float3 outlineColor = lerp(sceneColor, _OutlineColor.rgb, _OutlineColor.a);
+        //float3 outlineColor = lerp(sceneColor, _OutlineColor.rgb, sobelOutline);
         float3 color = lerp(sceneColor, outlineColor, sobelOutline);
 
 
