@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CharacterController : MonoBehaviour
 {
@@ -20,6 +21,13 @@ public class CharacterController : MonoBehaviour
     // Animator Component Reference
     Animator m_animator;
 
+    // post processing controls
+    [SerializeField] PostProcessVolume m_volume;
+    private Vignette m_vignette;
+
+    [SerializeField] float m_vignetteIntensity;
+    [SerializeField] float m_vignetteThreshold;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +35,10 @@ public class CharacterController : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_healthHash = Animator.StringToHash("Health");
         setHealth();
+
+        // Post processing settings
+        m_volume.profile.TryGetSettings(out m_vignette);
+        m_vignette.intensity.value = 0f;
     }
 
     // Update is called once per frame
@@ -39,6 +51,12 @@ public class CharacterController : MonoBehaviour
             m_animator.SetTrigger("Extra");
             ResetTimer();
         }
+        if(m_health <= m_vignetteThreshold)
+        {
+            float intensity = m_vignetteIntensity - (m_health / MAX_HEALTH);
+            m_vignette.intensity.value = intensity;
+        }
+        else { m_vignette.intensity.value = 0f; }
     }
 
     void ResetTimer()
@@ -54,7 +72,7 @@ public class CharacterController : MonoBehaviour
 
     public float ReduceHealth()
     {
-        if (isDeadCheck()) return 0;
+        if (isDeadCheck()) return m_health;
         m_health -= m_difference;
         if (m_health <= 0)
         {
