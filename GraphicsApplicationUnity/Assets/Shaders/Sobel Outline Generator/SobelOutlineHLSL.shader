@@ -15,6 +15,7 @@ Shader "VertexFragment/SobelOutlineHLSL"
 
     float4 _OutlineColor;
 
+    // https://en.wikipedia.org/wiki/Sobel_operator#:~:text=The%20Sobel%20operator%2C%20sometimes%20called,creates%20an%20image%20emphasising%20edges.
     float4 SobelSample(Texture2D t, SamplerState s, float2 uv, float3 offset)
     {
         float4 pixelCenter = t.Sample(s, uv);

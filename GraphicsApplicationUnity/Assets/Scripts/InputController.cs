@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour
     {
         if(m_focuses.Count == 0)
         {
-            Debug.Log("EMPTY ERROR"); 
+            Debug.Log("EMPTY_ERROR"); 
         }
         else
         {

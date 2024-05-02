@@ -27,6 +27,8 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] float m_vignetteIntensity;
     [SerializeField] float m_vignetteThreshold;
+    [SerializeField] float m_speed;
+    [SerializeField] float m_frequency = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -51,18 +53,23 @@ public class CharacterController : MonoBehaviour
             m_animator.SetTrigger("Extra");
             ResetTimer();
         }
-        if(m_health <= m_vignetteThreshold)
+        if(m_health <= m_vignetteThreshold) // creates vignette low health effect when health drops below a threshold
         {
+            // sets a heart beat effect (using Cos waves) using vignette screen effect, being based on the health + clamp
             float intensity = m_vignetteIntensity - (m_health / MAX_HEALTH);
-            m_vignette.intensity.value = intensity;
+            float frequency = m_frequency * (intensity * 10f);
+            m_vignette.intensity.value = (m_health <= 0) ? intensity : Mathf.Clamp(intensity * (0.5f - (Mathf.Cos(Time.timeSinceLevelLoad * frequency + Mathf.Cos(Time.timeSinceLevelLoad * frequency * m_speed))) * 0.5f) , intensity * 0.8f, m_vignetteIntensity);
         }
-        else { m_vignette.intensity.value = 0f; }
+        else { m_vignette.intensity.value = 0f; } // resets the vignette when health returns above the threshold
     }
 
+    // simple function to reset the timer
     void ResetTimer()
     {
         m_extraTimer = EXTRA_TIMER_MAX;
     }
+
+    // Event Function - When a GUI button is pressed this button triggers a random animation within the 'oh yeah' animations, reseting the extra timer
     public void OhYeahAnim()
     {
         m_animator.SetInteger("OhIndex", Random.Range(0, 3));
@@ -70,6 +77,8 @@ public class CharacterController : MonoBehaviour
         ResetTimer();
     }
 
+    // Event Function - Reduces the Health by the difference variable
+    // checks if the character is 'dead'
     public float ReduceHealth()
     {
         if (isDeadCheck()) return m_health;
@@ -88,6 +97,9 @@ public class CharacterController : MonoBehaviour
         return m_health;
     }
 
+
+    // Event Function - Increases the Health by the difference variable
+    // checks if the character is 'dead'
     public float IncreaseHealth()
     {
         if (m_health <= 0) Revive();
@@ -110,6 +122,7 @@ public class CharacterController : MonoBehaviour
         return m_health;
     }
 
+    // compares if the 'dead' boolean in the animator is true or false
     bool isDeadCheck()
     {
         if (m_animator.GetBool("Dead"))
@@ -122,12 +135,14 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    // an extra function specifically when the player is revived, if they have 0 or lower health then health increased (healed)
     public void Revive()
     {
         m_health += MAX_HEALTH / 2;
         StartCoroutine(wait4Revive());
     }
 
+    // sets the float based on an integer hash value comparing the actual health of the character
     void setHealth()
     {
         m_animator.SetFloat(m_healthHash, (m_health / MAX_HEALTH));
@@ -135,6 +150,8 @@ public class CharacterController : MonoBehaviour
         m_extraTimer = EXTRA_TIMER_MAX / 2;
     }
 
+
+    // A Timer function that waits seconds for to set the animator dead state to false
     IEnumerator wait4Revive()
     {
         //yield on a new YieldInstruction that waits for 5 seconds.

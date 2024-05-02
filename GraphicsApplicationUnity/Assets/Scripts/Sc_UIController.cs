@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// Controls the UI Elements attached to the players health.
+
 public class Sc_UIController : MonoBehaviour
 {
     // Reference to on screen text
@@ -15,19 +17,19 @@ public class Sc_UIController : MonoBehaviour
         SetHealthText(m_characterController.GetCurrentHealth());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    // Event Function - Calls SetHealthText while passing in the value from the Call to ReduceHealth within character controller.
+    // Decreases the Characters health while also setting the GUI text
     public void ReduceHealth() {
         SetHealthText(m_characterController.ReduceHealth()); 
     }
 
+    // Event Function - Calls SetHealthText while passing in the value from the Call to IncreaseHealth within character controller.
+    // Increases the Characters health while also setting the GUI text
     public void IncreaseHealth() {
         SetHealthText(m_characterController.IncreaseHealth());
     }
 
+    // Sets the GUI text to the parameter passed through
     void SetHealthText(float health) {
         if (m_healthTMP != null) {
             m_healthTMP.SetText(health.ToString());

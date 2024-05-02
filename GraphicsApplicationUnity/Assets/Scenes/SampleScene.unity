@@ -3561,8 +3561,10 @@ MonoBehaviour:
   m_extraTimer: 0
   m_reviveTimer: 6
   m_volume: {fileID: 760271656}
-  m_vignetteIntensity: 0.4
-  m_vignetteThreshold: 40
+  m_vignetteIntensity: 0.5
+  m_vignetteThreshold: 50
+  m_speed: 2
+  m_frequency: 1
 --- !u!4 &1726427752 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6218fb2919174a74684d3c51bdbfc3f1, type: 3}
