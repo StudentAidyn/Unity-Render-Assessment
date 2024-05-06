@@ -2,6 +2,7 @@ Shader "VertexFragment/SobelOutlineCg"
 {
     SubShader
     {
+        Tags {"RenderType" = "Transparent" }
         Cull Off ZWrite Off ZTest Always
 
         Pass
