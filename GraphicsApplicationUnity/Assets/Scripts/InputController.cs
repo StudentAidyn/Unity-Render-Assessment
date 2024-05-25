@@ -27,10 +27,18 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Quits application when pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        // Get mouse input to move the camera around
         if (Input.GetMouseButton(1))
         {
             m_turn.x += Input.GetAxis("Mouse X") * m_sensitivity;
             m_turn.y += Input.GetAxis("Mouse Y") * m_sensitivity;
+            // Fix to the camera angle, can look up and down but not swing and turn the angle 'upside down'
+            m_turn.y = Mathf.Clamp(m_turn.y, -90, 90);
             transform.localRotation = Quaternion.Euler(-m_turn.y, m_turn.x, 0);
         }
     }
@@ -44,8 +52,8 @@ public class InputController : MonoBehaviour
 
     public void PrevFocus()
     {
-        // previous object
-        m_index = (m_index - 1);
+        // previous available object to focus on
+        m_index--;
         if (m_index < 0) m_index = m_focuses.Count - 1;
         UpdateFocus();
     }
